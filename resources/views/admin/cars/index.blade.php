@@ -39,8 +39,9 @@
       <td>{{ $car->type === 'location' ? 'Oui' : 'Non' }}</td>
 
       <td>
-        <a href="{{ route('cars.show', $car) }}" class="btn btn-sm btn-info">Voir</a>
-        
+        <a href="{{ route('admin.cars.show', $car) }}" class="btn btn-sm btn-info">Voir</a>
+        <a href="{{ route('admin.cars.edit', $car) }}" class="btn btn-sm btn-warning">Modifier</a>
+        <a href="{{ route('admin.cars.delete', $car) }}" class="btn btn-sm btn-danger">Supprimer</a>
 
 
       </td>
