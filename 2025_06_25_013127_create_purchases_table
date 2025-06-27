@@ -1,0 +1,15 @@
+public function up()
+{
+    Schema::create('purchases', function (Blueprint $table) {
+        $table->bigIncrements('id');
+        $table->unsignedBigInteger('user_id');
+        $table->unsignedBigInteger('car_id');
+        $table->date('purchase_date');
+        $table->decimal('price_paid', 10, 2);
+        $table->timestamps();
+
+        $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        $table->foreign('car_id')->references('id')->on('cars')->onDelete('cascade');
+    });
+}
+
