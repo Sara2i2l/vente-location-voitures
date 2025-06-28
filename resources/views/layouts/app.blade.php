@@ -31,8 +31,8 @@
       @endif
     @endauth
     @guest
-      <a href="{{ route('login') }}" class="btn btn-link">Login</a>
-      <a href="{{ route('register') }}" class="btn btn-link">Register</a>
+      <a href="{{ route('login') }}" class="btn btn-link">Connexion</a>
+      <a href="{{ route('register') }}" class="btn btn-link">Créer un compte</a>
     @else
       <form action="{{ route('logout') }}" method="POST" class="ml-2">
         @csrf
