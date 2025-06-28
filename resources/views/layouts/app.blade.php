@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('title', 'Vente & Location Voitures')</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -21,11 +21,31 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+  <a class="navbar-brand" href="{{ route('cars.index') }}">Vente & Location Voitures</a>
+  <div class="ml-auto d-flex">
+    <a href="{{ route('cars.index') }}" class="btn btn-outline-primary mx-1">Toutes les voitures</a>
+    @auth
+      @if(auth()->user()->is_admin)
+        <a href="{{ route('admin.cars.create') }}" class="btn btn-primary mx-1">Ajouter une voiture</a>
+      @endif
+    @endauth
+    @guest
+      <a href="{{ route('login') }}" class="btn btn-link">Login</a>
+      <a href="{{ route('register') }}" class="btn btn-link">Register</a>
+    @else
+      <form action="{{ route('logout') }}" method="POST" class="ml-2">
+        @csrf
+        <button type="submit" class="btn btn-link">Logout</button>
+      </form>
+    @endguest
+  </div>
+</nav>
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+               <!-- <a class="navbar-brand" href="{{ url('/') }}">
+                    {{ config('app.name', 'Vente & Location Voitures') }}
                 </a>
+-->
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>

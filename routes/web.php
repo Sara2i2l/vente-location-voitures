@@ -32,6 +32,7 @@ Route::get('/cars/{car}', [CarController::class, 'show'])->name('cars.view');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 */
 
+
 Route::get('/',                [CarController::class, 'index'])->name('cars.index');
 Route::get('/cars/{car}',      [CarController::class, 'show'])->name('cars.show');
 
@@ -39,10 +40,15 @@ Route::get('/cars/{car}',      [CarController::class, 'show'])->name('cars.show'
 
 Auth::routes(['reset' => true, 'verify' => true, 'login' => true, 'register' => true, 'confirm' => false]);
 
-// Redirect any /home hits to our public catalog
-Route::get('/home', function () {
-    return redirect()->route('cars.index');
-})->name('home');
+// car catalog
+
+Route::get('/', function(){
+    if (auth()->check() && auth()->user()->is_admin) {
+        return redirect()->route('admin.cars.index');
+    }
+    return app(\App\Http\Controllers\CarController::class)->index();
+})->name('cars.index');
+
 
 
 
@@ -55,6 +61,9 @@ Route::group([
     'namespace'  => 'Admin',
 ], function(){
     Route::get('dashboard', 'DashboardController@index')->name('dashboard');
+// Confirmation page
+	Route::get('cars/{car}/delete', 'CarController@delete')
+     	->name('cars.delete');
     Route::resource('cars', 'CarController');
 });
 
