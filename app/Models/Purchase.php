@@ -6,7 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Purchase extends Model
 {
-    protected $fillable = ['user_id', 'car_id', 'date_achat', 'prix_achat'];
+    protected $fillable = [
+        'user_id',
+        'car_id',
+	'date_achat',
+        'prix_achat',
+    ];
 
     public function user()
     {

@@ -1,4 +1,4 @@
-<!doctype html>
+ <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
@@ -23,21 +23,42 @@
     <div id="app">
         <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
   <a class="navbar-brand" href="{{ route('cars.index') }}">Vente & Location Voitures</a>
-  <div class="ml-auto d-flex">
+  
+  <div class="ml-auto d-flex align-items-center">
     <a href="{{ route('cars.index') }}" class="btn btn-outline-primary mx-1">Toutes les voitures</a>
+
     @auth
       @if(auth()->user()->is_admin)
         <a href="{{ route('admin.cars.create') }}" class="btn btn-primary mx-1">Ajouter une voiture</a>
       @endif
+
+      {{-- Menu “Mon Espace” --}}
+      <div class="dropdown mx-1">
+        <button class="btn btn-secondary dropdown-toggle" 
+                type="button" id="accountMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Mon Espace
+        </button>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accountMenu">
+          @if(auth()->user()->is_admin)
+            <a class="dropdown-item" href="{{ route('admin.cars.index') }}">Dashboard Admin</a>
+            <!-- <a class="dropdown-item" href="{{ route('admin.cars.index') }}">Gestion bookings</a> -->
+          @else
+            <a class="dropdown-item" href="{{ route('user.bookings.index') }}">Mes réservations</a>
+            <a class="dropdown-item" href="{{ route('user.bookings.create') }}">Réserver une voiture</a>
+            <a class="dropdown-item" href="{{ route('user.purchases.index') }}">Mes achats</a>
+          @endif
+          <div class="dropdown-divider"></div>
+          <form action="{{ route('logout') }}" method="POST" class="px-4 py-2 m-0">
+            @csrf
+            <button type="submit" class="btn btn-link p-0">Déconnexion</button>
+          </form>
+        </div>
+      </div>
     @endauth
+
     @guest
-      <a href="{{ route('login') }}" class="btn btn-link">Connexion</a>
-      <a href="{{ route('register') }}" class="btn btn-link">Créer un compte</a>
-    @else
-      <form action="{{ route('logout') }}" method="POST" class="ml-2">
-        @csrf
-        <button type="submit" class="btn btn-link">Logout</button>
-      </form>
+      <a href="{{ route('login') }}" class="btn btn-link mx-1">Connexion</a>
+      <a href="{{ route('register') }}" class="btn btn-link mx-1">Créer un compte</a>
     @endguest
   </div>
 </nav>
